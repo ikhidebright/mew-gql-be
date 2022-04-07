@@ -7,10 +7,6 @@ const { loadFilesSync } = require("@graphql-tools/load-files");
 const typeDefinitions = require("./graphql/types/index");
 const { print } = require("graphql");
 const cors = require("cors");
-// const { WebSocketServer } = require("ws");
-// const { PubSub } = require("graphql-yoga");
-
-// const pubsub = new PubSub();
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -31,15 +27,6 @@ const resolvers = mergeResolvers(resolverFiles);
 
 const app = express();
 
-// Creating the WebSocket server
-// const wsServer = new WebSocketServer({
-// This is the `httpServer` we created in a previous step.
-// server: httpServer,
-// Pass a different path here if your ApolloServer serves at
-// a different path.
-//   path: "/subscriptions",
-// });
-
 app.use(cors());
 
 app.use(
@@ -47,13 +34,10 @@ app.use(
   graphqlHTTP({
     schema: schema,
     rootValue: resolvers,
-    // context: {
-    //   pubsub,
-    // },
     graphiql: true,
   })
 );
 
-app.listen(process.env.PORT, () =>
-  console.log(`Now browse to localhost:${process.env.PORT}/api`)
-);
+app.listen(process.env.PORT, () => {
+  console.info(`Listening on http://localhost:${process.env.PORT}/api`);
+});
