@@ -6,7 +6,7 @@ module.exports = {
       const { data } = await http.get("weather", {
         params: { q: cityName },
       });
-      return data;
+      return data.main.temp;
     } catch (error) {
       console.log(error);
       throw new Error(error);
